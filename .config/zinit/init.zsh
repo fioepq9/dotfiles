@@ -1,6 +1,5 @@
 #!/bin/env zsh
 
-
 # functions
 has() {
 	command -v "$@" >/dev/null 2>&1 && return 0 || return 1
@@ -11,16 +10,13 @@ alias mac="[[ $OSTYPE =~ 'darwin*' ]]"
 # constant
 export ZINIT_CONFIG_HOME="$(dirname $0)"
 
-
 # XDG
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 
-
 # proxy
 [[ ! -f $ZINIT_CONFIG_HOME/proxy.zsh ]] || source $ZINIT_CONFIG_HOME/proxy.zsh
-
 
 # zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -55,5 +51,5 @@ has yadm || brew install yadm
 ## nerd-fonts
 if mac; then
 	brew tap homebrew/cask-fonts
-  brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs -I {} brew install --cask {} || true
+	brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs -I {} brew install --cask {} || true
 fi

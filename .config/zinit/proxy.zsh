@@ -1,5 +1,5 @@
 # proxy: https://zinglix.xyz/2020/04/18/wsl2-proxy/
-if linux; then 
+if linux; then
   export PROXY="socks5://$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }'):7890"
 elif mac; then
   export PROXY="socks5://127.0.0.1:7890"
@@ -12,7 +12,7 @@ setproxy() {
   export HTTPS_PROXY=$PROXY
   export https_proxy=$PROXY
   export ALL_PROXY=$PROXY
-  if has git; then 
+  if has git; then
     git config --global http.proxy $PROXY
     git config --global https.proxy $PROXY
   fi
@@ -23,7 +23,7 @@ unsetproxy() {
   unset HTTPS_PROXY
   unset https_proxy
   unset ALL_PROXY
-  if has git; then 
+  if has git; then
     git config --global --unset http.proxy
     git config --global --unset https.proxy
   fi
