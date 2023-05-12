@@ -5,7 +5,8 @@
 has() {
 	command -v "$@" >/dev/null 2>&1 && return 0 || return 1
 }
-
+alias linux="[[ $OSTYPE =~ 'linux*' ]]"
+alias mac="[[ $OSTYPE =~ 'darwin*' ]]"
 
 # constant
 export ZINIT_CONFIG_HOME="$(dirname $0)"
@@ -50,3 +51,9 @@ export PATH=$PATH:$HOME/.cargo/bin
 
 ## yadm
 has yadm || brew install yadm
+
+## nerd-fonts
+if mac; then
+	brew tap homebrew/cask-fonts
+  brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs -I {} brew install --cask {} || true
+fi
