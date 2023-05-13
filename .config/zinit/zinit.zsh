@@ -18,7 +18,7 @@ light-mode \
 	atload"alias find=fd" \
 	@sharkdp/fd \
 light-mode \
-	atload"[[ ! -f $ZINIT_CONFIG_HOME/fzf.zsh ]] || source $ZINIT_CONFIG_HOME/fzf.zsh" \
+	atload"silent_source $ZINIT_CONFIG_HOME/fzf.zsh" \
 	sbin"fzf" \
 	@junegunn/fzf \
 light-mode \
@@ -29,7 +29,7 @@ light-mode \
 light-mode \
 	mv"bat* -> bat" \
 	sbin"bat/bat" \
-	atload"[[ ! -f $ZINIT_CONFIG_HOME/bat.zsh ]] || source $ZINIT_CONFIG_HOME/bat.zsh" \
+	atload"silent_source $ZINIT_CONFIG_HOME/bat.zsh" \
 	@sharkdp/bat \
 light-mode \
 	mv"atuin* -> atuin" \
@@ -76,15 +76,19 @@ light-mode \
 	atload'eval "$(navi widget zsh)"' \
 	@denisidoro/navi
 
-zinit ice depth"1" atload"[[ ! -f $ZINIT_CONFIG_HOME/p10k.zsh ]] || source $ZINIT_CONFIG_HOME/p10k.zsh"
+zinit ice depth"1" atload"silent_source $ZINIT_CONFIG_HOME/p10k.zsh"
 zinit light @romkatv/powerlevel10k
 
-zinit for \
+zinit depth"1" lucid for \
 light-mode \
     @jeffreytse/zsh-vi-mode \
 light-mode \
-	wait"has fzf" lucid \
+	wait"has fzf" \
 	@Aloxaf/fzf-tab \
+light-mode \
+	wait"has kubectl" \
+	@nnao45/zsh-kubectl-completion
+
 
 zinit wait lucid for \
 atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \

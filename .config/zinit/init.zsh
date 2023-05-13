@@ -6,6 +6,9 @@ has() {
 retry() {
 	until "$@"; do sleep 1; done
 }
+silent_source() {
+	[[ ! -f "$@" ]] || source "$@"
+}
 alias linux="[[ $OSTYPE =~ 'linux*' ]]"
 alias mac="[[ $OSTYPE =~ 'darwin*' ]]"
 
@@ -19,7 +22,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 
 # proxy
-[[ ! -f $ZINIT_CONFIG_HOME/proxy.zsh ]] || source $ZINIT_CONFIG_HOME/proxy.zsh
+silent_source $ZINIT_CONFIG_HOME/proxy.zsh
 
 # zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -29,7 +32,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zdharma-continuum/zinit-annex-bin-gem-node
 export PATH=$PATH:$ZPFX/bin
 zinit light zdharma-continuum/zinit-annex-patch-dl
-[[ ! -f $ZINIT_CONFIG_HOME/zinit.zsh ]] || source $ZINIT_CONFIG_HOME/zinit.zsh
 
 ## homebrew
 zinit ice as"null" wait"(! has brew)" lucid \
@@ -56,9 +58,13 @@ export PATH=$PATH:$HOME/.cargo/bin
 ## yadm
 has yadm || brew install yadm
 
+## deno
+has deno || brew install deno
+
 ## nerd-fonts
 if mac; then
 	brew tap homebrew/cask-fonts
 	brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs -I {} brew install --cask {} || true
 fi
 
+silent_source $ZINIT_CONFIG_HOME/zinit.zsh
