@@ -1,14 +1,17 @@
 #!/bin/env zsh
-
 # functions
 has() {
 	command -v "$@" >/dev/null 2>&1 && return 0 || return 1
+}
+retry() {
+	until "$@"; do sleep 1; done
 }
 alias linux="[[ $OSTYPE =~ 'linux*' ]]"
 alias mac="[[ $OSTYPE =~ 'darwin*' ]]"
 
 # constant
 export ZINIT_CONFIG_HOME="$(dirname $0)"
+linux && has /home/linuxbrew/.linuxbrew/bin/brew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # XDG
 export XDG_DATA_HOME=$HOME/.local/share
@@ -23,12 +26,17 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
+zinit light zdharma-continuum/zinit-annex-bin-gem-node
+export PATH=$PATH:$ZPFX/bin
+zinit light zdharma-continuum/zinit-annex-patch-dl
 [[ ! -f $ZINIT_CONFIG_HOME/zinit.zsh ]] || source $ZINIT_CONFIG_HOME/zinit.zsh
 
 ## homebrew
-zinit ice cloneonly wait lucid atclone"chmod a+x ./install.sh && ./install.sh"
-zinit snippet https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-[[ $OSTYPE =~ 'linux*' ]] && has /home/linuxbrew/.linuxbrew/bin/brew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+zinit ice as"null" wait"(! has brew)" lucid \
+	dl"https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" \
+	atclone"chmod a+x ./install.sh; ./install.sh"
+zinit light zdharma-continuum/null
+linux && has /home/linuxbrew/.linuxbrew/bin/brew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 ## git
 has git || brew install git
@@ -53,3 +61,4 @@ if mac; then
 	brew tap homebrew/cask-fonts
 	brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs -I {} brew install --cask {} || true
 fi
+
