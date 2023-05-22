@@ -1,10 +1,12 @@
-# proxy: https://zinglix.xyz/2020/04/18/wsl2-proxy/
-if linux; then
-  export PROXY="socks5://$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }'):7890"
-elif mac; then
-  export PROXY="socks5://127.0.0.1:7890"
-else
-  echo "zinit/proxy.sh: unsupported platform: $OSTYPE"
+if [[ -z $PROXY ]]; then
+  if linux; then
+    # proxy: https://zinglix.xyz/2020/04/18/wsl2-proxy/
+    export PROXY="socks5://$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }'):7890"
+  elif mac; then
+    export PROXY="socks5://127.0.0.1:7890"
+  else
+    echo "zinit/proxy.sh: unsupported platform: $OSTYPE"
+  fi
 fi
 setproxy() {
   export HTTP_PROXY=$PROXY
@@ -28,4 +30,3 @@ unsetproxy() {
     git config --global --unset https.proxy
   fi
 }
-setproxy

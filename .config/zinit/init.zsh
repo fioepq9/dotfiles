@@ -14,7 +14,6 @@ alias mac="[[ $OSTYPE =~ 'darwin*' ]]"
 
 # constant
 export ZINIT_CONFIG_HOME="$(dirname $0)"
-linux && has /home/linuxbrew/.linuxbrew/bin/brew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # XDG
 export XDG_DATA_HOME=$HOME/.local/share
@@ -24,6 +23,9 @@ export XDG_CACHE_HOME=$HOME/.cache
 # proxy
 silent_source $ZINIT_CONFIG_HOME/proxy.zsh
 
+# brew
+silent_source $ZINIT_CONFIG_HOME/brew.zsh
+
 # zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -32,39 +34,4 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zdharma-continuum/zinit-annex-bin-gem-node
 export PATH=$PATH:$ZPFX/bin
 zinit light zdharma-continuum/zinit-annex-patch-dl
-
-## homebrew
-zinit ice as"null" wait"(! has brew)" lucid \
-	dl"https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" \
-	atclone"chmod a+x ./install.sh; ./install.sh"
-zinit light zdharma-continuum/null
-linux && has /home/linuxbrew/.linuxbrew/bin/brew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-## git
-has git || brew install git
-git config --global init.defaultBranch main
-
-## golang
-has go || brew install golang
-go env -w GO111MODULE="on"
-go env -w GOBIN="$(go env GOPATH)/bin"
-go env -w GOPROXY="https://goproxy.cn,direct"
-export PATH=$PATH:$(go env GOBIN)
-
-## rust
-has cargo || brew install rust
-export PATH=$PATH:$HOME/.cargo/bin
-
-## yadm
-has yadm || brew install yadm
-
-## deno
-has deno || brew install deno
-
-## nerd-fonts
-if mac; then
-	brew tap homebrew/cask-fonts
-	brew search '/font-.*-nerd-font/' | awk '{ print $1 }' | xargs -I {} brew install --cask {} || true
-fi
-
 silent_source $ZINIT_CONFIG_HOME/zinit.zsh
