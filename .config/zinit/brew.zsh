@@ -53,8 +53,8 @@ has atuin || brew install atuin
 eval "$(atuin init zsh)"
 
 ## zoxide
-has zoxide || brew install zoxide
-eval "$(zoxide init --cmd cd --hook pwd zsh)"
+# has zoxide || brew install zoxide
+# eval "$(zoxide init --cmd cd --hook pwd zsh)"
 
 ## bottom
 has btm || brew install bottom
