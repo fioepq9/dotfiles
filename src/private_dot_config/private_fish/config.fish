@@ -41,7 +41,7 @@ if status is-interactive
     end
 
     if has fzf
-        if has fd; then
+        if has fd
             export FZF_CTRL_T_COMMAND='fd --strip-cwd-prefix --type file --follow --hidden --exclude .git --color=always'
             export FZF_DEFAULT_COMMAND='fd --strip-cwd-prefix --type file --follow --hidden --exclude .git --color=always'
             function fcd

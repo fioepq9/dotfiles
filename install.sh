@@ -24,3 +24,4 @@ cargo install --locked navi
 
 rsync -a src/ ~/.local/share/chezmoi
 chezmoi apply
+
