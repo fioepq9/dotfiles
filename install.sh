@@ -1,26 +1,44 @@
 #!/usr/bin/env bash
-curl -fsLS https://pkgx.sh | sh
 
-pkgx install fish
-pkgx install starship.rs
-pkgx install git
-pkgx install neovim.io
-pkgx install curl
-pkgx install bat
-pkgx install jq
-pkgx install yq
-pkgx install eza
-pkgx install crates.io/ripgrep
-pkgx install fd
-pkgx install fzf
-pkgx install rsync
-pkgx install dns.lookup.dog
-pkgx install crates.io/gitui
-pkgx install chezmoi.io
+if ! command -v pkgx >/dev/null 2>&1; then
+  curl -fsLS https://pkgx.sh | sh
+fi
 
-pkgx install cargo
-cargo install --locked atuin
-cargo install --locked navi
+for pkg in $(echo "
+zsh
+git
+curl
+starship=starship.rs
+nvim=neovim.io
+bat
+jq
+yq
+eza
+rg=crates.io/ripgrep
+fd
+fzf
+rsync
+dog=dns.lookup.dog
+gitui=crates.io/gitui
+chezmoi=chezmoi.io
+cargo
+file=darwinsys.com/file
+"); do
+  cmd=$pkg; repo=$pkg
+  if 
+  if [[ $pkg =~ ^(.+)=(.+)$ ]]; then
+    # bash
+    cmd=${BASH_REMATCH[1]}
+    repo=${BASH_REMATCH[2]}
+    # zsh
+    # cmd=$match[1]
+    # repo=$match[2]
+  fi
+  if command -v $cmd >/dev/null 2>&1; then
+    continue
+  fi
+  pkgx install $repo
+done
 
 rsync -a src/ ~/.local/share/chezmoi
 chezmoi apply
