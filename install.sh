@@ -25,7 +25,6 @@ cargo
 file=darwinsys.com/file
 "); do
   cmd=$pkg; repo=$pkg
-  if 
   if [[ $pkg =~ ^(.+)=(.+)$ ]]; then
     # bash
     cmd=${BASH_REMATCH[1]}

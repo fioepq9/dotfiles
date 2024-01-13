@@ -14,6 +14,7 @@ RUN pkgx install chezmoi.io
 COPY . /tmp/dotfiles
 WORKDIR /tmp/dotfiles
 RUN chmod a+x install.sh && bash install.sh
+RUN zsh -c "source ~/.zshrc"
 
 
 
