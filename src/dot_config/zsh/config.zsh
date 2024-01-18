@@ -37,8 +37,8 @@ source $ZSH_CONFIG_HOME/zi.zsh
 zi ice depth'1' atload'export PATH="$ZPFX/bin:$PATH"'
 zi light z-shell/z-a-bin-gem-node
 # https://github.com/z-shell/z-a-rust
-zi ice depth'1'
-zi light z-shell/z-a-rust
+# zi ice depth'1'
+# zi light z-shell/z-a-rust
 # https://wiki.zshell.dev/zh-Hans/ecosystem/annexes/meta-plugins#@zsh-users+fast
 zi ice depth'1' for \
   light-mode z-shell/z-a-meta-plugins \
@@ -51,17 +51,26 @@ zi ice wait lucid depth'1' has'fzf'
 zi light Aloxaf/fzf-tab
 
 # https://github.com/atuinsh/atuin
+# zi wait lucid depth'1' as'null' for \
+#   id-as'ellie/atuin' \
+#   cargo'atuin' sbin'**/atuin' \
+#   eval"atuin init zsh" \
+#   @z-shell/0
 zi wait lucid depth'1' as'null' for \
-  id-as'ellie/atuin' \
-  cargo'atuin' sbin'**/atuin' \
+  from"gh-r" sbin'**/atuin -> atuin' \
   eval"atuin init zsh" \
-  @z-shell/0
+  @atuinsh/atuin
 # https://github.com/denisidoro/navi
+# zi wait lucid depth'1' as'null' for \
+#   id-as'denisidoro/navi' \
+#   cargo'navi' sbin'**/navi' \
+#   eval"navi widget zsh" \
+#   @z-shell/0
 zi wait lucid depth'1' as'null' for \
-  id-as'denisidoro/navi' \
-  cargo'navi' sbin'**/navi' \
+  has'fzf' \
+  from"gh-r" sbin'navi' \
   eval"navi widget zsh" \
-  @z-shell/0
+  @denisidoro/navi
 # https://github.com/starship/starship
 zi depth'1' as'null' for \
   id-as'starship/starship' \
