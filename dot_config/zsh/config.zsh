@@ -1,3 +1,11 @@
+#!/usr/bin/env zsh
+
+##################################
+# curl -fsLS https://pkgx.sh | sh
+# pkgx install zsh curl git
+##################################
+
+
 has_command() {
   command -v "$@" >/dev/null 2>&1 && return 0 || return 1
 }
@@ -23,6 +31,7 @@ retry() {
 export ZSH_CONFIG_HOME="$(dirname $0)"
 export PATH="$HOME/.local/bin:$PATH"
 
+source $ZSH_CONFIG_HOME/pkgx.zsh
 source $ZSH_CONFIG_HOME/zi.zsh
 
 

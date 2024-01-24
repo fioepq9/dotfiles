@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 if ! command -v pkgx >/dev/null 2>&1; then
   curl -fsLS https://pkgx.sh | sh
@@ -27,17 +27,14 @@ file=darwinsys.com/file
   cmd=$pkg; repo=$pkg
   if [[ $pkg =~ ^(.+)=(.+)$ ]]; then
     # bash
-    cmd=${BASH_REMATCH[1]}
-    repo=${BASH_REMATCH[2]}
+    # cmd=${BASH_REMATCH[1]}
+    # repo=${BASH_REMATCH[2]}
     # zsh
-    # cmd=$match[1]
-    # repo=$match[2]
+    cmd=$match[1]
+    repo=$match[2]
   fi
   if command -v $cmd >/dev/null 2>&1; then
     continue
   fi
   pkgx install $repo
 done
-
-rsync -a src/ ~/.local/share/chezmoi
-chezmoi apply
