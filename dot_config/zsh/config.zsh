@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 ##################################
-# curl -fsLS https://pkgx.sh | sh
-# pkgx install zsh curl git
+# NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# brew install gcc zsh curl git chezmoi
 ##################################
 
 
@@ -151,11 +151,11 @@ zi wait lucid depth'1' as'null' for \
     alias g="gitui"
   ' \
   @z-shell/0
-# https://github.com/ogham/dog
-zi wait lucid depth'1' as'null' for \
-  id-as'ogham/dog' \
-  has'dog' \
-  atload'
-    alias nslookup="dog"
-  ' \
-  @z-shell/0
+# # https://github.com/ogham/dog
+# zi wait lucid depth'1' as'null' for \
+#   id-as'ogham/dog' \
+#   has'dog' \
+#   atload'
+#     alias nslookup="dog"
+#   ' \
+#   @z-shell/0
