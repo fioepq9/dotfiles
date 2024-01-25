@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
-if ! command -v brew >/dev/null 2>&1; then
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
 __dotfiles_homebrew_on_linux() {
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  if ! ls "${HOMEBREW_PREFIX}/bin/brew" >/dev/null 2>&1; then
+    NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 }
 __dotfiles_homebrew_on_mac() {
   UNAME_MACHINE="$(/usr/bin/uname -m)"
@@ -16,6 +16,9 @@ __dotfiles_homebrew_on_mac() {
   else
       # On Intel macOS, this script installs to /usr/local only
       HOMEBREW_PREFIX="/usr/local"
+  fi
+  if ! ls "${HOMEBREW_PREFIX}/bin/brew" >/dev/null 2>&1; then
+    NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
   eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 }
