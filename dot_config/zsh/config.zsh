@@ -31,7 +31,6 @@ retry() {
 export ZSH_CONFIG_HOME="$(dirname $0)"
 export PATH="$HOME/.local/bin:$PATH"
 
-source $ZSH_CONFIG_HOME/pkgx.zsh
 source $ZSH_CONFIG_HOME/zi.zsh
 
 
